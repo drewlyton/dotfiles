@@ -1,0 +1,12 @@
+[user]
+	name = Drew Lyton
+	email = lytle.drew@gmail.com
+	signingkey = 8CE27F7A9C14DC29F222913E8ABA114CC1FD508C
+[pull]
+	rebase = true
+[commit]
+	gpgsign = true
+[tag]
+	gpgSign = true
+[gpg]
+	program = /opt/homebrew/bin/gpg

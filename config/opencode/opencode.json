@@ -1,0 +1,60 @@
+{
+  "mcp": {
+    "Sanity": {
+      "type": "remote",
+      "url": "https://mcp.sanity.io",
+      "headers": {
+        "Authorization": "Bearer {env:SANITY_MCP_TOKEN}"
+      }
+    },
+    "bigquery": {
+      "type": "local",
+      "command": [
+        "npx",
+        "-y",
+        "@toolbox-sdk/server",
+        "--prebuilt",
+        "bigquery",
+        "--stdio"
+      ],
+      "environment": {
+        "BIGQUERY_PROJECT": "sanity-cloud"
+      }
+    },
+    "growthbook": {
+      "type": "local",
+      "command": ["npx", "-y", "@growthbook/mcp@latest"],
+      "environment": {
+        "GB_API_KEY": "{env:GROWTHBOOK_API_KEY}",
+        "GB_EMAIL": "drew.lyton@sanity.io"
+      }
+    },
+    "linear": {
+      "type": "remote",
+      "url": "https://mcp.linear.app/mcp",
+      "enabled": true,
+      "headers": {
+        "Authorization": "Bearer {env:LINEAR_API_TOKEN}"
+      }
+    },
+    "sentry": {
+      "type": "remote",
+      "url": "https://mcp.sentry.dev/mcp",
+      "oauth": {}
+    },
+    "amplitude": {
+      "type": "remote",
+      "url": "https://mcp.amplitude.com/mcp",
+      "oauth": {}
+    }
+  },
+  "permission": {
+    "skill": {
+      "*": "allow",
+      "pr-review": "allow",
+      "internal-*": "deny",
+      "experimental-*": "ask"
+    }
+  },
+  "$schema": "https://opencode.ai/config.json"
+}

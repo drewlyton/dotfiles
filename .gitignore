@@ -1,0 +1,21 @@
+# Secrets (API tokens, keys)
+config/zsh/.secrets
+
+# zsh runtime files
+config/zsh/.zsh_history
+config/zsh/.zcompdump*
+
+# tmux plugins (managed by TPM at runtime)
+config/tmux/plugins/
+config/tmux/*.log
+
+# nvim lazy plugin state (managed by lazy.nvim at runtime)
+config/nvim/.lazy/
+
+# opencode runtime
+config/opencode/node_modules/
+config/opencode/bun.lock
+config/opencode/package-lock.json
+
+# OS files
+.DS_Store
