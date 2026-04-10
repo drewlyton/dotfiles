@@ -12,11 +12,24 @@ if ! command -v brew &>/dev/null; then
   eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 
-# --- GNU Stow ---
-if ! command -v stow &>/dev/null; then
-  echo "==> Installing GNU Stow..."
-  brew install stow
-fi
+# --- Brew packages ---
+echo "==> Installing brew packages..."
+brew install \
+  stow \
+  tmux \
+  neovim \
+  fzf \
+  zoxide \
+  ripgrep \
+  rbenv \
+  gnupg \
+  gh
+
+# --- Brew casks ---
+echo "==> Installing cask apps..."
+brew install --cask \
+  ghostty \
+  nikitabobko/tap/aerospace
 
 # --- Create ~/.config if it doesn't exist ---
 mkdir -p "$HOME/.config"
@@ -27,13 +40,6 @@ stow -v -d "$DOTFILES_DIR" -t "$HOME" home
 
 echo "==> Stowing config/ -> ~/.config/"
 stow -v -d "$DOTFILES_DIR" -t "$HOME/.config" config
-
-# --- Tmux Plugin Manager ---
-TPM_DIR="$HOME/.tmux/plugins/tpm"
-if [ ! -d "$TPM_DIR" ]; then
-  echo "==> Installing Tmux Plugin Manager..."
-  git clone https://github.com/tmux-plugins/tpm "$TPM_DIR"
-fi
 
 # --- Oh My Zsh ---
 OMZ_DIR="$HOME/.oh-my-zsh"
@@ -49,6 +55,32 @@ if [ ! -d "$P10K_DIR" ]; then
   git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "$P10K_DIR"
 fi
 
+# --- Tmux Plugin Manager ---
+TPM_DIR="$HOME/.tmux/plugins/tpm"
+if [ ! -d "$TPM_DIR" ]; then
+  echo "==> Installing Tmux Plugin Manager..."
+  git clone https://github.com/tmux-plugins/tpm "$TPM_DIR"
+fi
+
+# --- nvm ---
+NVM_DIR="$HOME/.nvm"
+if [ ! -d "$NVM_DIR" ]; then
+  echo "==> Installing nvm..."
+  curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash
+fi
+
+# --- bun ---
+if ! command -v bun &>/dev/null; then
+  echo "==> Installing Bun..."
+  curl -fsSL https://bun.sh/install | bash
+fi
+
+# --- pnpm ---
+if ! command -v pnpm &>/dev/null; then
+  echo "==> Installing pnpm..."
+  curl -fsSL https://get.pnpm.io/install.sh | sh -
+fi
+
 # --- OpenCode plugins ---
 if [ -f "$HOME/.config/opencode/package.json" ]; then
   echo "==> Installing OpenCode plugins..."
@@ -58,3 +90,4 @@ fi
 echo ""
 echo "==> Done! Restart your shell or run: source ~/.zshenv && source ~/.config/zsh/.zshrc"
 echo "==> For tmux plugins, open tmux and press prefix + I to install plugins."
+echo "==> Don't forget to: cp ~/.config/zsh/.secrets.example ~/.config/zsh/.secrets"
