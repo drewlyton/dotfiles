@@ -31,7 +31,7 @@ The install script handles:
 
 ## Secrets
 
-API tokens are kept out of the repo. After install, copy the example and fill in the values:
+After install, copy the example and fill in the values:
 
 ```sh
 cp ~/.config/zsh/.secrets.example ~/.config/zsh/.secrets
