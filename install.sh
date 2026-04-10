@@ -40,6 +40,17 @@ if [[ "$OS" == "Darwin" ]]; then
     nikitabobko/tap/aerospace
 fi
 
+# --- zsh (not installed by default on Linux) ---
+if ! command -v zsh &>/dev/null; then
+  echo "==> Installing zsh..."
+  sudo apt update && sudo apt install -y zsh
+fi
+
+if [[ "$(basename "$SHELL")" != "zsh" ]]; then
+  echo "==> Setting zsh as default shell..."
+  chsh -s "$(which zsh)"
+fi
+
 # --- Create ~/.config if it doesn't exist ---
 mkdir -p "$HOME/.config"
 
