@@ -75,11 +75,9 @@ if ! command -v bun &>/dev/null; then
   curl -fsSL https://bun.sh/install | bash
 fi
 
-# --- pnpm ---
-if ! command -v pnpm &>/dev/null; then
-  echo "==> Installing pnpm..."
-  curl -fsSL https://get.pnpm.io/install.sh | sh -
-fi
+# --- corepack (enables pnpm/yarn via Node) ---
+echo "==> Enabling corepack..."
+corepack enable
 
 # --- OpenCode plugins ---
 if [ -f "$HOME/.config/opencode/package.json" ]; then
