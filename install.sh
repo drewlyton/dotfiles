@@ -2,14 +2,21 @@
 set -euo pipefail
 
 DOTFILES_DIR="$(cd "$(dirname "$0")" && pwd)"
+OS="$(uname)"
 
-echo "==> Installing dotfiles from $DOTFILES_DIR"
+echo "==> Installing dotfiles from $DOTFILES_DIR ($OS)"
 
 # --- Homebrew ---
 if ! command -v brew &>/dev/null; then
   echo "==> Installing Homebrew..."
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+fi
+
+# Set up brew shellenv (different paths on macOS vs Linux)
+if [[ "$OS" == "Darwin" ]]; then
   eval "$(/opt/homebrew/bin/brew shellenv)"
+else
+  eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 fi
 
 # --- Brew packages ---
@@ -25,11 +32,13 @@ brew install \
   gnupg \
   gh
 
-# --- Brew casks ---
-echo "==> Installing cask apps..."
-brew install --cask \
-  ghostty \
-  nikitabobko/tap/aerospace
+# --- macOS cask apps ---
+if [[ "$OS" == "Darwin" ]]; then
+  echo "==> Installing macOS apps..."
+  brew install --cask \
+    ghostty \
+    nikitabobko/tap/aerospace
+fi
 
 # --- Create ~/.config if it doesn't exist ---
 mkdir -p "$HOME/.config"

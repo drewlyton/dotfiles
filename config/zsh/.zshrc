@@ -1,4 +1,11 @@
-eval "$(/opt/homebrew/bin/brew shellenv)"
+# Homebrew (macOS Apple Silicon vs Intel vs Linux)
+if [[ -f /opt/homebrew/bin/brew ]]; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+elif [[ -f /usr/local/bin/brew ]]; then
+  eval "$(/usr/local/bin/brew shellenv)"
+elif [[ -f /home/linuxbrew/.linuxbrew/bin/brew ]]; then
+  eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+fi
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -32,36 +39,25 @@ export NVM_DIR="$HOME/.nvm"
 
 eval "$(rbenv init - zsh)"
 
-alias dsu="/Users/drew.lyton/Projects/delete-me/delete-staging-user/delete-staging-user.sh"
-
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/Users/drew.lyton/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/drew.lyton/google-cloud-sdk/path.zsh.inc'; fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f '/Users/drew.lyton/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/drew.lyton/google-cloud-sdk/completion.zsh.inc'; fi
+# Google Cloud SDK
+if [ -f "$HOME/google-cloud-sdk/path.zsh.inc" ]; then . "$HOME/google-cloud-sdk/path.zsh.inc"; fi
+if [ -f "$HOME/google-cloud-sdk/completion.zsh.inc" ]; then . "$HOME/google-cloud-sdk/completion.zsh.inc"; fi
 
 # bun completions
-[ -s "/Users/drew/.bun/_bun" ] && source "/Users/drew/.bun/_bun"
+[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
 
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 
-# iCloud stuff
-alias icloud='cd ~/Library/Mobile\ Documents/com~apple~CloudDocs/'
+# iCloud (macOS only)
+[[ "$(uname)" == "Darwin" ]] && alias icloud='cd ~/Library/Mobile\ Documents/com~apple~CloudDocs/'
 
 eval "$(zoxide init zsh)"
 
 alias ts='~/.config/tmux/session-picker.sh'
 alias cpf='~/.config/zsh/copy-file.sh'
 export PATH="$HOME/.cargo/bin:$PATH"
-# pnpm
-export PNPM_HOME="/Users/drew.lyton/Library/pnpm"
-case ":$PATH:" in
-  *":$PNPM_HOME:"*) ;;
-  *) export PATH="$PNPM_HOME:$PATH" ;;
-esac
-# pnpm end
 export PATH="$HOME/.local/bin:$PATH"
 
 # Source secrets (API tokens, etc.) - not tracked in dotfiles repo

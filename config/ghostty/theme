@@ -20,3 +20,4 @@ foreground = #c8d3f5
 cursor-color = #c8d3f5
 selection-background = #2d3f76
 selection-foreground = #c8d3f5
+font-size = 18
