@@ -72,8 +72,9 @@ stow -v -d "$DOTFILES_DIR" -t "$HOME/.config" config
 
 # --- Oh My Zsh ---
 OMZ_DIR="$HOME/.oh-my-zsh"
-if [ ! -d "$OMZ_DIR" ]; then
+if [ ! -f "$OMZ_DIR/oh-my-zsh.sh" ]; then
   echo "==> Installing Oh My Zsh..."
+  rm -rf "$OMZ_DIR"
   RUNZSH=no KEEP_ZSHRC=yes sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 fi
 
