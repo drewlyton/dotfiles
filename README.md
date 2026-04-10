@@ -31,18 +31,11 @@ The install script handles:
 
 ## Secrets
 
-API tokens are kept out of the repo. After install, create the secrets file:
+API tokens are kept out of the repo. After install, copy the example and fill in the values:
 
 ```sh
 cp ~/.config/zsh/.secrets.example ~/.config/zsh/.secrets
 ```
-
-Fill in the values for:
-- `SANITY_MCP_TOKEN` -- Sanity MCP auth token
-- `GROWTHBOOK_API_KEY` -- GrowthBook admin API key
-- `LINEAR_API_TOKEN` -- Linear API token
-
-These are sourced by `.zshrc` and referenced in `opencode.json` via `{env:VAR}` interpolation.
 
 ## Structure
 
