@@ -74,7 +74,7 @@ stow -v -d "$DOTFILES_DIR" -t "$HOME/.config" config
 OMZ_DIR="$HOME/.oh-my-zsh"
 if [ ! -d "$OMZ_DIR" ]; then
   echo "==> Installing Oh My Zsh..."
-  RUNZSH=no sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+  RUNZSH=no KEEP_ZSHRC=yes sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 fi
 
 # --- Powerlevel10k ---
@@ -98,11 +98,25 @@ if [ ! -d "$NVM_DIR" ]; then
   curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash
 fi
 
+# Source nvm so it's available in this session
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+
+# --- Node (via nvm) ---
+if ! command -v node &>/dev/null; then
+  echo "==> Installing Node via nvm..."
+  nvm install --lts
+fi
+
 # --- bun ---
 if ! command -v bun &>/dev/null; then
   echo "==> Installing Bun..."
   curl -fsSL https://bun.sh/install | bash
 fi
+
+# Source bun so it's available in this session
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
 
 # --- corepack (enables pnpm/yarn via Node) ---
 echo "==> Enabling corepack..."
