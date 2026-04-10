@@ -30,22 +30,31 @@ brew install \
   ripgrep \
   rbenv \
   gnupg \
-  gh
+  gh \
+  cmake \
+  elixir
 
-# --- macOS cask apps ---
+# --- macOS ---
 if [[ "$OS" == "Darwin" ]]; then
   echo "==> Installing macOS apps..."
   brew install --cask \
     ghostty \
     nikitabobko/tap/aerospace
+
+  # Xcode Command Line Tools (provides clang/cc)
+  if ! xcode-select -p &>/dev/null; then
+    echo "==> Installing Xcode Command Line Tools..."
+    xcode-select --install
+  fi
 fi
 
-# --- zsh (not installed by default on Linux) ---
-if ! command -v zsh &>/dev/null; then
-  echo "==> Installing zsh..."
-  sudo apt update && sudo apt install -y zsh
+# --- Linux apt packages ---
+if [[ "$OS" == "Linux" ]]; then
+  echo "==> Installing apt packages..."
+  sudo apt update && sudo apt install -y zsh build-essential
 fi
 
+# --- Set zsh as default shell ---
 if [[ "$(basename "$SHELL")" != "zsh" ]]; then
   echo "==> Setting zsh as default shell..."
   chsh -s "$(which zsh)"
